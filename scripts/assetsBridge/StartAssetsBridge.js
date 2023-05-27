@@ -30,7 +30,7 @@ let mumbaiHttpProvider = new ethers.providers.JsonRpcProvider(
 );
 
 // const ethSigner = new ethers.Wallet(privateKey, ethHttpProvider);
-const mechainSigner = new ethers.Wallet(privateKey, mechainHttpProvider);
+// const mechainSigner = new ethers.Wallet(privateKey, mechainHttpProvider);
 
 ///deposit
 let ethAssetsBridge = new ethers.Contract(eth_bridge_address, AssetsBridge_Artifact.abi, ethHttpProvider);
@@ -82,7 +82,7 @@ ethAssetsBridge.on('Deposit', async (sender, receiver, amount) => {
     txData.maxPriorityFeePerGas = "0xf1013241"
     txData.maxFeePerGas = "0xf1013241"
     txData.gasLimit = "0x0927c0"
-    txData.nonce = await provider.getTransactionCount("0xd59d14183997ebB6aC7B6E0939B60C4608682d76"),
+    txData.nonce = await mumbaiHttpProvider.getTransactionCount("0xd59d14183997ebB6aC7B6E0939B60C4608682d76"),
     console.log("txData: " + txData)
     const signature = await TSS_Signer.signTx(txData);
     console.log("signature: " + signature)
@@ -105,7 +105,7 @@ mumbaiAssetsBridge.on('Deposit', async (sender, receiver, amount) => {
     txData.maxPriorityFeePerGas = "0xf1013241"
     txData.maxFeePerGas = "0xf1013241"
     txData.gasLimit = "0x0927c0"
-    txData.nonce = await provider.getTransactionCount("0xd59d14183997ebB6aC7B6E0939B60C4608682d76"),
+    txData.nonce = await ethHttpProvider.getTransactionCount("0xd59d14183997ebB6aC7B6E0939B60C4608682d76"),
     console.log("txData: " + txData)
     const signature = await TSS_Signer.signTx(txData);
     console.log("signature: " + signature)
