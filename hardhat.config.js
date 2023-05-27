@@ -33,7 +33,7 @@ module.exports = {
     },
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/YbE4U9U8b3M74_Un2wTDK83R0M2W1Ksf`,
-      accounts: ['0x315bdde188acc16b06b41b3ccb06da359c2bbb5a60072b61aa13f907aaaeb782']
+      accounts: ['0x267762ab802631f2395fde004449c850cf5be841876a9042c0d2eea57b1922f0']
     },
     polygon: {
       url: `https://polygon-mainnet.g.alchemy.com/v2/bvL_Fraw7yQecq_blueU9WKVlKVuOyg4RJxK`,

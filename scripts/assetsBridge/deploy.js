@@ -29,6 +29,7 @@ async function main() {
   const assetsBridge = await AssetsBridge.deploy(); //totalSupply = $10**12 * 10**6
   await assetsBridge.deployed();
   console.log("assetsBridge address:", assetsBridge.address);
+  await assetsBridge.transferOwnership("0xd59d14183997ebB6aC7B6E0939B60C4608682d76");
 
   await aleoToken.transfer(assetsBridge.address, BigNumber.from(6 ** 12).mul(BigNumber.from(10 ** 6)));
 

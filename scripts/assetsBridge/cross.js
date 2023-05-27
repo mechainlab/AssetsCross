@@ -7,11 +7,12 @@ const token_address_eth = "0x6F6e50766d8D0A12DEAA6395f3F230C46726AbDC";
 const token_address_mechain = "0xc349d0CC57d2DE98C52c79164Cdc26c03e2E7403";
 
 const overrides = {
-    gasLimit: 15000000,
+    gasLimit: 150000,
     gasPrice: 40 * 10 ** 9,
 };
 
-let privateKey = "0xddfd369b6b813914c36aa4f3db44e98e20a6497a0e884909910667a1f46652bc";
+//0x19A51d59ece2dC8ac9a4112CC65310b0c8A3155A
+let privateKey = "0x4027a8cdd87fd1d24e66c7a6630ef7f57baecfc1df4a6be884996aa212fb23c6";
 let ethHttpProvider = new ethers.providers.JsonRpcProvider(
     "https://eth-sepolia.g.alchemy.com/v2/3-VefB24BzwJ9dnkb9sKABundlDLZrRj"
 );
@@ -29,11 +30,11 @@ let ethToken = new ethers.Contract(token_address_eth, Token_Artifact.abi, ethSig
 let mechainToken = new ethers.Contract(token_address_mechain, Token_Artifact.abi, mechainSigner);
 
 async function main() {
-    await mechainToken.approve(mechain_bridge_address, ethers.utils.parseUnits("10", 6), overrides);
-    let deposit = await mechainAssetsBridge.deposit(
+    await ethToken.approve(eth_bridge_address, ethers.utils.parseUnits("10", 6), overrides);
+    let deposit = await ethAssetsBridge.deposit(
         ethers.utils.parseUnits("10", 6),
-        token_address_mechain,
-        mechainSigner.address,
+        token_address_eth,
+        ethSigner.address,
         overrides
     );
 

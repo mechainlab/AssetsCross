@@ -40,6 +40,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "axios": "^1.2.1",
+    "ethers": "^5.7.2"
   }
 }

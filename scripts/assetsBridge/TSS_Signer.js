@@ -1,21 +1,34 @@
-const bls = require('bls-lib')
-bls.onModuleInit(() => {
-  bls.init()
+const { ethers } = require('ethers');
+const axios = require("axios");
+const { resolveProperties } = require("@ethersproject/properties");
+const { serialize } = require("@ethersproject/transactions");
+const { splitSignature, hexZeroPad } = require("@ethersproject/bytes");
+const { keccak256 } = require("@ethersproject/keccak256");
 
-  const sec = bls.secretKey()
-  const pub = bls.publicKey()
-  const sig = bls.signature()
 
-  bls.secretKeySetByCSPRNG(sec)
-  const msg = 'cross'
-  bls.sign(sig, sec, msg)
+exports.signTx = async function(txData) {
+  const serializedTx = ethers.utils.serializeTransaction(txData);
+  const signature = await axios.post(
+    "http://localhost:8001/send-tx",
+    keccak256(serializedTx).slice(2),
+    {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    }
+  );
 
-  bls.getPublicKey(pub, sec)
+  const parsedSigature = {
+    recoveryParam: signature.data.recid,
+    r: hexZeroPad(
+      "0x" + Buffer.from(signature.data.r.scalar).toString("hex"),
+      32
+    ),
+    s: hexZeroPad(
+      "0x" + Buffer.from(signature.data.s.scalar).toString("hex"),
+      32
+    ),
+  };
 
-  const v = bls.verify(sig, pub, msg)
-  // v === true
-
-  bls.free(sec)
-  bls.free(sig)
-  bls.free(pub)
-})
+  return splitSignature(parsedSigature);
+}
